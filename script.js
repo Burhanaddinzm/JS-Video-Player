@@ -155,14 +155,18 @@ volumeBar.addEventListener("click", (event) => {
 
 window.addEventListener("keydown", (event) => {
   if (event.code === "ArrowUp") {
-    video.volume += 0.1;
+    if (video.volume < 0.9) {
+      video.volume += 0.1;
+    } else video.volume = 1;
     updateVolume();
   }
 });
 
 window.addEventListener("keydown", (event) => {
   if (event.code === "ArrowDown") {
-    video.volume -= 0.1;
+    if (video.volume > 0.1) {
+      video.volume -= 0.1;
+    } else video.volume = 0;
     updateVolume();
   }
 });
