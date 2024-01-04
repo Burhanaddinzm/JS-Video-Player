@@ -76,24 +76,23 @@ window.addEventListener("keypress", (event) => {
 });
 
 //Duration stuff
-backwardsBtn.addEventListener("click", () => {
+const backwardsVideo = () => {
   video.currentTime = video.currentTime - 10;
-});
+};
 
-forwardsBtn.addEventListener("click", () => {
+const forwardsVideo = () => {
   video.currentTime = video.currentTime + 10;
+};
+
+backwardsBtn.addEventListener("click", backwardsVideo);
+forwardsBtn.addEventListener("click", forwardsVideo);
+
+window.addEventListener("keydown", (event) => {
+  if (event.code === "ArrowLeft") backwardsVideo();
 });
 
 window.addEventListener("keydown", (event) => {
-  if (event.code === "ArrowLeft") {
-    video.currentTime = video.currentTime - 10;
-  }
-});
-
-window.addEventListener("keydown", (event) => {
-  if (event.code === "ArrowRight") {
-    video.currentTime = video.currentTime + 10;
-  }
+  if (event.code === "ArrowRight") forwardsVideo();
 });
 
 durationBar.addEventListener("click", (event) => {
@@ -121,10 +120,7 @@ video.addEventListener("timeupdate", () => {
     totalMinutes
   ).padStart(2, "0")}:${String(totalSeconds).padStart(2, "0")}`;
 
-  if (cTime === duration) {
-    isPlaying = false;
-    playPauseIcon.src = `./assets/icons/play_arrow.svg`;
-  }
+  if (cTime === duration) pauseVideo();
 
   currentDuration.style.width = `${(cTime / duration) * 100}%`;
 });
@@ -135,12 +131,17 @@ const updateVolume = () => {
   const newHeight = `${currentVolume * 100}%`;
   volumeControl.style.height = newHeight;
 
-  if (video.volume == 0) {
-    volumeIcon.src = "./assets/icons/no_sound.svg";
-  } else if (video.volume < 0.5) {
-    volumeIcon.src = "./assets/icons/volume_down.svg";
+  if (video.volume === 0) volumeIcon.src = "./assets/icons/no_sound.svg";
+  else if (video.volume < 0.5) volumeIcon.src = "./assets/icons/volume_down.svg";
+  else volumeIcon.src = "./assets/icons/volume_up.svg";
+};
+
+const muteVideo = () => {
+  if (video.volume !== 0) {
+    currentVolume = video.volume;
+    video.volume = 0;
   } else {
-    volumeIcon.src = "./assets/icons/volume_up.svg";
+    video.volume = currentVolume;
   }
 };
 
@@ -152,26 +153,28 @@ volumeBar.addEventListener("click", (event) => {
   updateVolume();
 });
 
-volumeIcon.addEventListener("click", () => {
-  if (video.volume !== 0) {
-    currentVolume = video.volume;
-    video.volume = 0;
-  } else {
-    video.volume = currentVolume;
+window.addEventListener("keydown", (event) => {
+  if (event.code === "ArrowUp") {
+    video.volume += 0.1;
+    updateVolume();
   }
+});
 
+window.addEventListener("keydown", (event) => {
+  if (event.code === "ArrowDown") {
+    video.volume -= 0.1;
+    updateVolume();
+  }
+});
+
+volumeIcon.addEventListener("click", () => {
+  muteVideo();
   updateVolume();
 });
 
 window.addEventListener("keypress", (event) => {
   if (event.key === "m" || event.key === "M") {
-    if (video.volume !== 0) {
-      currentVolume = video.volume;
-      video.volume = 0;
-    } else {
-      video.volume = currentVolume;
-    }
-
+    muteVideo();
     updateVolume();
   }
 });
