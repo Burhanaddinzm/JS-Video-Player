@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Player</title>
+    <!-- Style Link -->
+    <link rel="stylesheet" href="./syle.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="player-container">
+        <!-- Video Container -->
+        <div class="video-container">
+          <video id="video">
+            <source src="./assets/videos/content.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <!-- Control Panel -->
+        <div class="control-panel">
+          <div class="left-side">
+            <button id="play-pause">
+              <img src="./assets/icons/play_arrow.svg" alt="play-pause" />
+            </button>
+            <!-- Volume Control -->
+            <button id="volume">
+              <img src="./assets/icons/volume_up.svg" alt="volume" />
+              <div class="volume-control">
+                <div id="volume-bar">
+                  <div id="volume-control-bar">
+                    <div class="volume-ball"></div>
+                  </div>
+                </div>
+              </div>
+            </button>
+            <div class="time-container">
+              <span id="current-time">00:00:00</span>
+              <span>/</span>
+              <span id="total-duration">00:00:00</span>
+            </div>
+          </div>
+          <div class="right-side">
+            <button id="backward">
+              <img src="./assets/icons/backward.svg" alt="backwards" />
+            </button>
+            <button id="forward">
+              <img src="./assets/icons/forward.svg" alt="forwards" />
+            </button>
+            <button id="fullscreen">
+              <img src="./assets/icons/fullscreen.svg" alt="fullscreen" />
+            </button>
+          </div>
+          <div id="duration-bar">
+            <div id="current-duration"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Script -->
+    <script src="./script.js"></script>
+  </body>
+</html>
